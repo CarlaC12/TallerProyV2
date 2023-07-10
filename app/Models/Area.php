@@ -15,11 +15,4 @@ class Area extends Model
         'siglas',
     ];
 
-    public function resultados() {
-        return $this->hasMany(Resultado::class, 'areaId');
-    }
-
-    public function preguntas() {
-        return $this->hasMany(Pregunta::class, 'areaId');
-    }
 }

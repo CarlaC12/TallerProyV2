@@ -32,4 +32,9 @@ class EvaluacionDenver extends Model
     public function getAllTests($infanteId) {
         return $this->where('infanteId', $infanteId)->orderBy('id', 'DESC')->get();
     }
+
+    public function estados()
+    {
+        return $this->belongsToMany(Estado::class, 'evaluacion_estado');
+    }
 }

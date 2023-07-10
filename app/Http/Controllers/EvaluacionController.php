@@ -8,6 +8,8 @@ use App\Models\Infante;
 use App\Models\Personal;
 use App\Models\User;
 use App\Models\Area;
+use App\Models\Estado;
+use App\Models\Evaluacion_Estado;
 use App\Models\ResultadoDenver;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -73,10 +75,22 @@ class EvaluacionController extends Controller
         $PS =  Pregunta::whereIn('id', $result->pluck('preguntaId'))
         ->where('areaId', 4)
         ->get();
-    
-        return view('evaluaciones.ver',compact('evaluacion', 'MG', 'MF', 'AL', 'PS','result'));
-    }
+        
+        $estado = Estado::all();
+        $totalFilas = $estado->count();
+        $data = [];
 
+        foreach ($estado as $estadoItem) {
+            $evaluacionesEstado = Evaluacion_Estado::where('estado_id', $estadoItem->id)
+                ->where('evaluacion_id', $id)
+                ->count();
+        
+            $emocion = $estadoItem->name;
+        
+            $data[$emocion] = $evaluacionesEstado;
+        }
+        return view('evaluaciones.ver',compact('evaluacion', 'MG', 'MF', 'AL', 'PS','result','data', 'totalFilas'));
+        }
     /**
      * Show the form for editing the specified resource.
      *

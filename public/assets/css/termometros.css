@@ -1,0 +1,86 @@
+.termometer {
+    width: 200px;
+    height: 400px;
+    background-color: #eee;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  
+  .fill {
+    width: 100%;
+    background-color: #ff6b6b;
+    position: absolute;
+    bottom: 0;
+  }
+  
+  .face {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    border: 2px solid #000;
+  }
+  
+  .face.happy {
+    border-color: #000;
+  }
+  
+  .face.sad {
+    border-color: #000;
+  }
+  
+  .face.angry {
+    border-color: #000;
+  }
+  
+  .face:before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    position: absolute;
+    top: 45px;
+    border-radius: 50%;
+  }
+  
+  .face.happy:before {
+    left: 30px;
+  }
+  
+  .face.sad:before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .face.angry:before {
+    right: 30px;
+  }
+  
+  .face:after {
+    content: "";
+    width: 40px;
+    height: 10px;
+    background-color: #000;
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+  }
+  
+  .face.happy:after {
+    background-color: #00ff00;
+  }
+  
+  .face.sad:after {
+    background-color: #0000ff;
+  }
+  
+  .face.angry:after {
+    background-color: #ff0000;
+  }

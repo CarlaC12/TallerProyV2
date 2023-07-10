@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/PAccion/{id}', [App\Http\Controllers\PlanAccionController::class, 'crear'])->name('PAccion');
     Route::get('/Seguimiento/{id}', [App\Http\Controllers\SeguimientoController::class, 'crear'])->name('seguimiento.crear');
     Route::resource('seguimiento',SeguimientoController ::class)->names('seguimiento');
+    Route::post('/process-image', 'App\Http\Controllers\ImageController@processImage')->name('process.image');
+
 });
 Auth::routes();
 
