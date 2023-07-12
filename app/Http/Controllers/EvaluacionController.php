@@ -166,7 +166,7 @@ class EvaluacionController extends Controller
         $infante = Infante::findOrFail($id);
         $evaluaciondenver = new EvaluacionDenver();
         $evaluaciondenver->fecha = Carbon::now();
-        $evaluaciondenver->edadMeses = $infante->edad;
+        $evaluaciondenver->edadMeses = $infante->edad*12;
         $evaluaciondenver->personalId = Personal::where('userId', auth()->user()->id)->first()->id;
         // $evaluaciondenver->personalId= User::where('id', auth()->user()->id)->first()->id;
         $evaluaciondenver->infanteId = $id;

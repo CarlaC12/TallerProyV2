@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Evaluación Denver</title>
     <style>
         body {
@@ -9,6 +10,7 @@
         }
 
         .form-container {
+            position: relative; /* Agregado posición relativa */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,7 +18,6 @@
             background-image: url('{{ asset('img/login2.jpg') }}');
             background-size: cover;
             background-position: center;
-            position: relative;
             margin-bottom: 30px; /* Agregado espacio inferior */
         }
 
@@ -110,26 +111,83 @@
         }
 
         .video-container {
+            position: relative; /* Agregado posición relativa */
             width: 50%; /* Ajusta el ancho de la webcam */
         }
 
         .form-container form {
             flex: 1;
         }
+
+       .emotion-icon-container {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 80px;
+        height: 80px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        border: 2px solid #FF4545; /* Agregado borde rojo */
+      }
+
+      .emotion-icon-container i {
+        font-size: 50px; /* Aumenta el tamaño del ícono */
+      }
+
+      .emotion-icon-container span {
+        font-size: 16px; /* Aumenta el tamaño del texto de la probabilidad */
+        color: #00FF00; /* Color verde fosforescente */
+        text-align: center;
+        margin-top: 10px; /* Ajusta el margen superior */
+      }
+
+      /* Estilos de color según la emoción */
+      .emotion-icon-container.happy {
+        background-color: #FFCE00; /* Amarillo */
+      }
+
+      .emotion-icon-container.sad {
+        background-color: #0080FF; /* Azul */
+      }
+
+      .emotion-icon-container.angry {
+        background-color: #FF4545; /* Rojo */
+      }
+
+      .emotion-icon-container.surprise {
+        background-color: #FF8C00; /* Naranja */
+      }
+
+      .emotion-icon-container.fear {
+        background-color: #00B000; /* Verde */
+      }
+
+      .emotion-icon-container.disgust {
+        background-color: #800080; /* Morado */
+      }
+
+      .emotion-icon-container.neutral {
+        background-color: #A0A0A0; /* Gris */
+      }
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    </head>
+</head>
 <body>
 <div class="form-container">
     <div class="video-container">
         <video src="" id="video"></video>
+        <div class="emotion-icon-container"></div>
     </div>
     <div id="emotion-container">
         <div id="response-container"></div>
     </div>
     <div class="form-content">
         <h1 class="form-title">Evaluación Denver</h1>
-         <form action="{{ route('guardar_respuestas', ['evaluacionId' => $evaluacionId]) }}" method="POST">
+         <form action="{{ route('guardar_respuestas', ['evaluacionId' => $evaluacionId]) }}" method="POST" id="evaluacion-form">
             @csrf
             <h2>{{ $area->nombre }}</h2>
             @foreach ($preguntas as $pregunta)
@@ -146,8 +204,10 @@
                 </div>
             @endforeach
             <!-- Agregar un campo oculto para enviar los resultados -->
+            <div id="api-response-container" style="display: none;"></div>
             <input type="hidden" name="emotion_results" value="{{ htmlspecialchars(json_encode($emotionResults)) }}">
-            <button type="submit" name="guardar_respuestas" class="btn btn-primary form-button" onclick="stopCaptureAndSubmit()">Guardar respuesta</button>
+            <button type="submit" name="guardar_respuestas" class="btn btn-primary form-button">Guardar respuesta</button>
+        </form>
         </form> 
         @if (isset($emotion))
             <div class="emotion-result">
@@ -158,12 +218,11 @@
     </div>
 </div>
 
-
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.965.0.min.js"></script>
 <script>
   var emotionResults = {!! json_encode($emotionResults) !!};
   var bucketName = 'denver-emotion';
-
+ var captureInterval; 
   AWS.config.update({
     accessKeyId: 'AKIAT5WDOTWE7UDWPY3G',
     secretAccessKey: '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',
@@ -245,6 +304,50 @@
         console.log('Resultados de emociones:', emotionResults);
          document.querySelector('input[name="emotion_results"]').value = JSON.stringify(emotionResults);
          console.log('Valor actual de emotion_results:', document.querySelector('input[name="emotion_results"]').value);
+
+        var emotionIcon = document.createElement('i');
+        emotionIcon.className = 'far'; // Clase base de Font Awesome
+
+        if (emotionClass === 'happy') {
+          emotionIcon.classList.add('fa-smile'); // Clase de icono de Font Awesome para la felicidad
+        } else if (emotionClass === 'sad') {
+          emotionIcon.classList.add('fa-sad-tear'); // Clase de icono de Font Awesome para la tristeza
+        } else if (emotionClass === 'angry') {
+          emotionIcon.classList.add('fa-angry'); // Clase de icono de Font Awesome para el enojo
+        } else if (emotionClass === 'surprise') {
+          emotionIcon.classList.add('fa-surprise'); // Clase de icono de Font Awesome para la sorpresa
+        } else if (emotionClass === 'fear') {
+          emotionIcon.classList.add('fa-frown'); // Clase de icono de Font Awesome para el miedo
+        } else if (emotionClass === 'disgust') {
+          emotionIcon.classList.add('fa-flushed'); // Clase de icono de Font Awesome para el disgusto
+        } else {
+          emotionIcon.classList.add('fa-meh'); // Clase de icono de Font Awesome para la emoción neutral (por defecto)
+        }
+
+        var emotionProbSpan = document.createElement('span');
+        emotionProbSpan.textContent = emotionProb.toFixed(2); // Ajusta la precisión decimal según tus necesidades
+
+        // Agrega el ícono y la probabilidad al contenedor
+        var emotionIconContainer = document.querySelector('.emotion-icon-container');
+        emotionIconContainer.innerHTML = ''; // Limpia el contenido existente
+        emotionIconContainer.appendChild(emotionIcon);
+
+        // Agrega la clase de color correspondiente
+        emotionIconContainer.classList.add(emotionClass);
+
+
+// Agrega la clase de color correspondiente
+emotionIconContainer.classList.add(emotionClass);
+
+
+// Agrega la clase de color correspondiente
+emotionIconContainer.classList.add(emotionClass);
+
+         // Enviar los resultados de la emoción al servidor
+        var formData = new FormData();
+        formData.append('evaluacionId', {{ $evaluacionId }});
+        formData.append('emocion', emotionClass);
+        formData.append('probabilidad', emotionProb);
       } else {
         console.log('Error: la respuesta del servidor no contiene los datos esperados');
       }
@@ -252,7 +355,18 @@
     .catch(function (error) {
       console.log('Error al enviar la URL de la imagen al servidor:', error);
     });
-}
+  }
+
+  function stopCaptureAndSubmit(event) {
+    event.preventDefault();
+    clearInterval(captureInterval); // Detiene la captura de imágenes
+
+    // Obtén el formulario y envíalo
+    var form = document.getElementById('evaluacion-form');
+    form.submit();
+  }
+  
+  document.getElementById('evaluacion-form').onsubmit = stopCaptureAndSubmit;
 </script>
 </body>
 </html>
