@@ -1,16 +1,17 @@
 @extends('dashboard.app')
 @section('title')
-    Seguimiento
+    Seguimiento Show|Edit
 @endsection
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Plan de Acción N° {{ $pAccion->id}} en Seguimiento</h3>
+            <h3 class="page__heading">Plan de Acción N° {{ $seguimiento->id}} en Seguimiento</h3>
         </div>
         <div class="section-body">
             <div class="card mb-3" style="max-width: 740px;">
-                <form method="post" action="{{ route('seguimiento.store') }}" novalidate>
-                @csrf
+                <form method="post"  action="{{route('seguimiento.update',$seguimiento->id)}}" novalidate>
+                    @csrf
+                    @method('PUT')
                     <div class="row g-0">
                         <div class=" col-md-4">
                             <div class="card"
@@ -60,7 +61,7 @@
                           margin-right: 15px;  ">
                                     <div class="card-body">
                                         <label for="">Descripcion de Motricidad Gruesa</label>
-                                        <textarea name="descripcionMG" rows="4" cols="50">                
+                                        <textarea name="descripcionMG" rows="4" cols="50">{{old('descripcionMG',$seguimiento->descripcionMG)}}                
                                     </textarea>
 
 
@@ -77,7 +78,7 @@
                                     <div class="card-body">
                                         <label for="">Descripcion de Motricidad Fina</label>
 
-                                        <textarea name="descripcionMF" rows="4" cols="50">
+                                        <textarea name="descripcionMF" rows="4" cols="50">{{old('descripcionMF',$seguimiento->descripcionMF)}}
                                    
                                     </textarea>
 
@@ -96,7 +97,7 @@
                                     <div class="card-body">
                                         <label for="">Audición Lenguaje</label>
 
-                                        <textarea name="descripcionAL" rows="4" cols="50">
+                                        <textarea name="descripcionAL" rows="4" cols="50">{{old('descripcionAL',$seguimiento->descripcionAL)}}
                                    
                                     </textarea>
 
@@ -115,7 +116,7 @@
                                     <div class="card-body">
                                         <label for="">Personal Social</label>
 
-                                        <textarea name="descripcionPS" rows="4" cols="50">
+                                        <textarea name="descripcionPS" rows="4" cols="50">{{old('descripcionPS',$seguimiento->descripcionPS)}}
                                    
                                     </textarea>
 
@@ -126,7 +127,7 @@
                         </div>
 
                     </div>
-                    <input type="text" name="pAccionId"  value="{{old('pAccionId', $pAccion->id)}}"  style="display: none;">
+                    <input type="text" name="pAccionId"  value="{{old('pAccionId', $seguimiento->pAccionId)}}"  style="display: none;">
                     <div class="row"
                         style="margin-top: 15px;
                 
@@ -135,7 +136,7 @@
                           <button type="submit"class="btn btn-primary cursor-pointer">
                             <span>
                                 <i class="fas fa-file-download" style="color: #faf8f5"></i>
-                            </span>Guardar  
+                            </span>Actualizar  
                           </button>
                         {{-- <div class="d-grid gap-2 col-12 mx-auto">
                             <a href="" class="btn btn-primary">Guardar</a>

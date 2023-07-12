@@ -48,6 +48,9 @@ class PermissionSeeder extends Seeder
         Permission::Create(['name' => 'editar-evaluacion'])->syncRoles([$role0, $role3, $role4]);
         Permission::Create(['name' => 'borrar-evaluacion'])->syncRoles([$role0]);
 
+        //Roles
+        Permission::Create(['name' => 'evaluar'])->syncRoles([$role3]);
+
         $user = new User();
         $personal=new Personal();
         $user->name = 'Carla Cruz';  

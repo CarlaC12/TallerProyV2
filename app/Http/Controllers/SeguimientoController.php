@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PAccion;
 use App\Models\Seguimiento;
+use Illuminate\Support\Facades\DB;
 class SeguimientoController extends Controller
 {
     
@@ -68,7 +69,8 @@ class SeguimientoController extends Controller
      */
     public function show($id)
     {
-        //
+        $seguimiento=DB::table('seguimientos')->where('pAccionId',$id)->get()->first();
+        return view('seguimiento.show',compact('seguimiento'));
     }
 
     /**
@@ -91,7 +93,25 @@ class SeguimientoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'descripcionMG' => 'required',
+            'descripcionMF' => 'required',
+            'descripcionAL' => 'required',
+            'descripcionPS' => 'required',
+         
+            'pAccionId' => 'required',     
+        ]);
+        // $seguimiento=DB::table('seguimientos')->where('pAccionId',$id)->get()->first();
+        $seguimiento=Seguimiento::findOrfail($id);
+        $seguimiento->descripcionMG = $request->input('descripcionMG');
+        $seguimiento->descripcionMF = $request->input('descripcionMF');
+        $seguimiento->descripcionAL = $request->input('descripcionAL');
+        $seguimiento->descripcionPS = $request->input('descripcionPS');
+       
+        $seguimiento->pAccionId = $request->input('pAccionId');
+        $seguimiento->update();
+
+        return redirect()->route('evaluaciones.index');
     }
 
     /**

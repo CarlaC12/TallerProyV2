@@ -207,7 +207,7 @@
             }
           });
         }, 'image/jpeg');
-      }, 10000); // Capturar y enviar cada 5 segundos
+      }, 10000); // Capturar y enviar cada 10 segundos
 
       // Detener la captura después de cierto tiempo (opcional)
       var stopCaptureTimeout = setTimeout(function () {
@@ -240,6 +240,7 @@
         var emotionProb = data.results[0].emotion_prob;
 
         // Almacenar en el array emotionResults
+        
         emotionResults.push({ emotion_class: emotionClass, emotion_prob: emotionProb });
         console.log('Resultados de emociones:', emotionResults);
          document.querySelector('input[name="emotion_results"]').value = JSON.stringify(emotionResults);

@@ -80,23 +80,43 @@
                                 </thead>
                                 <tbody>
                                    
-                                    @foreach ($evaluaciones as $evaluacion)
+                                   @foreach ($evaluaciones as $evaluacion)
                                         <tr>
-                                            <td style="display: none">{{$evaluacion->id}}</td>
-                                            <td>{{ $evaluacion->infante->nombre }} {{ $evaluacion->infante->apellidoPaterno }}</td>
+                                            <td style="display: none">{{ $evaluacion->id }}</td>
+                                            <td>{{ $evaluacion->infante->nombre }}
+                                                {{ $evaluacion->infante->apellidoPaterno }}</td>
                                             <td>{{ $evaluacion->fecha }}</td>
                                             <td>{{ $evaluacion->total }}</td>
                                             <td>
-                                                <a class="btn btn-secondary" href="{{route('evaluaciones.show', $evaluacion->id)}}">Ver</a>
+                                                <a class="btn btn-secondary"
+                                                    href="{{ route('evaluaciones.show', $evaluacion->id) }}">Ver</a>
                                                 @can('ver-rol')
-                                                <a class="btn btn-success" href="{{route('evaluaciones.edit', $evaluacion->id)}}">Editar</a>
-                                                {!! Form::open(['method' => 'DELETE', 'route' => ['evaluaciones.destroy', $evaluacion->id], 'style'=>'display:inline']) !!}
-                                                    {!! Form::submit('Borrar', ['class'=>'btn btn-danger']) !!}
-                                                {!! Form::close() !!}
+                                                    <a class="btn btn-success"
+                                                        href="{{ route('evaluaciones.edit', $evaluacion->id) }}">Editar</a>
+                                                    {!! Form::open([
+                                                        'method' => 'DELETE',
+                                                        'route' => ['evaluaciones.destroy', $evaluacion->id],
+                                                        'style' => 'display:inline',
+                                                    ]) !!}
+                                                    {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                                                    {!! Form::close() !!}
                                                 @endcan
 
-                                                <a class="btn btn-warning" href="{{route('planAccion.show',$evaluacion->id)}}">  P.Acción</a>
-                                                <a class="btn btn-primary" href="{{route('seguimiento.create')}}">Seguimiento</a>
+
+
+                                                @php
+                                                    $paccion = DB::table('p_accions')
+                                                        ->where('evaluacionId', $evaluacion->id)
+                                                        ->exists();
+                                                @endphp
+
+                                                @if ($paccion)
+                                                    <a class="btn btn-warning"
+                                                        href="{{ route('planAccion.show', $evaluacion->id) }}"> P.Acción</a>
+                                                @endif
+
+
+
                                             </td>
                                         </tr>
                                     @endforeach

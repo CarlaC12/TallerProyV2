@@ -75,6 +75,42 @@ class EvaluacionController extends Controller
         $PS =  Pregunta::whereIn('id', $result->pluck('preguntaId'))
         ->where('areaId', 4)
         ->get();
+        /*Carla*/
+        $evaluador=DB::table('users')->where('id',$evaluacion->personalId)->get()->first();
+
+          $resulMG = DB::table('resultadosdenver')
+            ->select(DB::raw('count(denverescalaId) as count'))
+            ->where('evaluacionId', '=', $id )
+            ->where('denverescalaId', '=', 2)
+            ->where('areaId', '=', 1)
+            ->groupBy('denverescalaId')
+            ->get();
+
+            $resulMF = DB::table('resultadosdenver')
+            ->select(DB::raw('count(denverescalaId) as count'))
+            ->where('evaluacionId', '=',  $id)
+            ->where('denverescalaId', '=', 2)
+            ->where('areaId', '=', 2)
+            ->groupBy('denverescalaId')
+            ->get();
+
+            $resulAL = DB::table('resultadosdenver')
+            ->select(DB::raw('count(denverescalaId) as count'))
+            ->where('evaluacionId', '=',  $id)
+            ->where('denverescalaId', '=', 2)
+            ->where('areaId', '=', 3)
+            ->groupBy('denverescalaId')
+            ->get();
+
+            $resulPS = DB::table('resultadosdenver')
+            ->select(DB::raw('count(denverescalaId) as count'))
+            ->where('evaluacionId', '=',  $id)
+            ->where('denverescalaId', '=', 2)
+            ->where('areaId', '=', 4)
+            ->groupBy('denverescalaId')
+            ->get();
+
+        /*Carla*/
         
         $estado = Estado::all();
         $totalFilas = $estado->count();
@@ -89,7 +125,7 @@ class EvaluacionController extends Controller
         
             $data[$emocion] = $evaluacionesEstado;
         }
-        return view('evaluaciones.ver',compact('evaluacion', 'MG', 'MF', 'AL', 'PS','result','data', 'totalFilas'));
+        return view('evaluaciones.ver',compact('evaluacion', 'MG', 'MF', 'AL', 'PS','result','data', 'totalFilas'),compact('resulMG','resulMF','resulAL','resulPS','evaluador'));
         }
     /**
      * Show the form for editing the specified resource.

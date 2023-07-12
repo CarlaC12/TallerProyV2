@@ -6,11 +6,55 @@
     <section class="section">
         <div class="section-header">
             <h3 class="page__heading">Plan de Acción de la Evaluación N°{{ $paccion->evaluacionId }}</h3>
+
+
+
+
+            @php
+                $band = DB::table('seguimientos')
+                    ->where('pAccionId',$paccion->id)
+                    ->exists();
+            @endphp
+            @if ($band)
+
+            <a href="{{ route('seguimiento.show',$paccion->id) }}"  class="btn btn-primary cursor-pointer mr-25px" style="text-align: end" >
+                <span>
+                    <i class="fas fa-file" style="color: #faf8f5"></i>
+                </span> Ver Acción Seguimiento
+            </a>
+          
+            @else
             <a href="{{ route('seguimiento.crear',$paccion->id) }}"  class="btn btn-primary cursor-pointer mr-25px"  >
                 <span>
                     <i class="fas fa-plus" style="color: #faf8f5"></i>
                 </span>Acción Seguimiento
             </a>
+            @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- 
+            <a href="{{ route('seguimiento.crear',$paccion->id) }}"  class="btn btn-primary cursor-pointer mr-25px"  >
+                <span>
+                    <i class="fas fa-plus" style="color: #faf8f5"></i>
+                </span>Acción Seguimiento
+            </a>
+            <a href="{{ route('seguimiento.show',$paccion->id) }}"  class="btn btn-primary cursor-pointer mr-25px" style="text-align: end" >
+                <span>
+                    <i class="fas fa-file" style="color: #faf8f5"></i>
+                </span> Ver Acción Seguimiento
+            </a> --}}
+          
         </div>
         <div class="section-body">
             <div class="card mb-3" style="max-width: 500px; max-height: 610px;">

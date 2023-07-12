@@ -7,11 +7,52 @@
     <section class="section">
         <div class="section-header">
             <h3 class="page__heading">Información</h3>
-            <a href="{{ route('PAccion', $evaluacion->id) }}" class="btn btn-primary cursor-pointer mr-25px">
+            @if ($resulMG->count() > 0 || $resulMF->count() > 0 || $resulAL->count() > 0 || $resulPS->count() > 0)
+                @php
+                    $variables = [$resulMG, $resulMF, $resulAL, $resulPS];
+                    $contador = 0;
+                    
+                    foreach ($variables as $variable) {
+                        if ($variable->count() > 0) {
+                            $contador++;
+                        }
+                    }
+                    
+                    if ($contador >= 2) {
+                        echo '<div class="alert alert-success" role="alert" style="max-width: 740px; max-height: 70px;">';
+                        echo '<h3 style="align-content: center; color: white;">fallo Absoluto</h3>';
+                        echo '</div>';
+                    } else {
+                        echo '<div class="alert alert-warning" role="alert" style="max-width: 740px; max-height: 70px;">';
+                        echo '<h3 style="align-content: center; color: white;">fallo Relativo</h3>';
+                        echo '</div>';
+                    }
+                @endphp
+            @else
+                <div class="alert alert-info" role="alert" style="max-width: 740px; max-height: 70px;">
+                    <h1 style="align-content: center; color: white;">Evaluación Exitosa</h1>
+                </div>
+            @endif
+
+            @php
+                $paccion = DB::table('p_accions')
+                    ->where('evaluacionId', $evaluacion->id)
+                    ->exists();
+            @endphp
+            @if ($paccion)
+
+            <a href="{{ route('PAccion', $evaluacion->id) }}" class="btn btn-primary cursor-pointer mr-25px"  style="display: none;>
                 <span>
                     <i class="fas fa-plus" style="color: #faf8f5"></i>
                 </span>Plan Accion
             </a>
+            @else
+                <a href="{{ route('PAccion', $evaluacion->id) }}" class="btn btn-primary cursor-pointer mr-25px">
+                    <span>
+                        <i class="fas fa-plus" style="color: #faf8f5"></i>
+                    </span>Plan Accion
+                </a>
+            @endif
         </div>
         <div class="section-body">
             <div class="row">
@@ -34,7 +75,7 @@
                                                 <label for="fecha" class="col-form-label">Fecha de evaluación: </label>
                                                 {{ $evaluacion->fecha }} <br>
                                                 <label for="personal" class="col-form-label">Nombre del Evaluador: </label>
-                                                {{ $evaluacion->personal->name }} <br>
+                                                {{ $evaluador->name }} <br>
                                                 <label for="resultadoMG" class="col-form-label">Total Motricidad Gruesa: </label>
                                                 @foreach ($MG as $mg)
                                                     <br>{{ $mg->pregunta }}<br>
