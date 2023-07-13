@@ -117,19 +117,19 @@
                                 <div class="thermometer">
                                     <div class="thermometer-icon">
                                         @if ($emocion == 'happy')
-                                            <i class="far fa-smile" style="font-size: 48px; color: #00ff00;"></i>
+                                            <i class="far fa-smile" style="font-size: 48px; color: #FFCE00;"></i>
                                         @elseif ($emocion == 'sad')
-                                            <i class="far fa-frown" style="font-size: 48px; color: #0000ff;"></i>
+                                            <i class="far fa-frown" style="font-size: 48px; color: #0080FF;"></i>
                                         @elseif ($emocion == 'angry')
-                                            <i class="far fa-angry" style="font-size: 48px; color: #ff0000;"></i>
+                                            <i class="far fa-angry" style="font-size: 48px; color: #FF4545;"></i>
                                         @elseif ($emocion == 'disgust')
-                                            <i class="far fa-disgust" style="font-size: 48px; color: #ff0000;"></i>
+                                            <i class="far fa-disgust" style="font-size: 48px; color: #800080;"></i>
                                         @elseif ($emocion == 'surprise')
-                                            <i class="far fa-surprise" style="font-size: 48px; color: #ff0000;"></i>
+                                            <i class="fas fa-exclamation" style="font-size: 48px; color: #FF8C00;"></i>
                                         @elseif ($emocion == 'neutral')
-                                            <i class="far fa-neutral" style="font-size: 48px; color: #ff0000;"></i>
+                                            <i class="far fa-meh-blank" style="font-size: 48px; color: #A0A0A0;"></i>
                                         @elseif ($emocion == 'fear')
-                                            <i class="far fa-fear" style="font-size: 48px; color: #ff0000;"></i>
+                                            <i class="far fa-fear" style="font-size: 48px; color: #00B000;"></i>
                                         @endif
                                     </div>
                                     <div class="thermometer-progress" style="width: {{ $cantidad }}%; background-color: #00ff00;"></div>

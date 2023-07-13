@@ -20,10 +20,7 @@ class ResultadosDenver extends Migration
             $table->unsignedBigInteger('preguntaId');
             $table->unsignedBigInteger('areaId');
             $table->timestamps();
-
             $table->softDeletes();
-
-
             $table->foreign('preguntaId')->on('pregunta')->references('id')->onDelete('cascade');
             $table->foreign('evaluacionId')->on('evaluaciondenver')->references('id')->onDelete('cascade');
             $table->foreign('areaId')->on('area')->references('id')->onDelete('cascade');
