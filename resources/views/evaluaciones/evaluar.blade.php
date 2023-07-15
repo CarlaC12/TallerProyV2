@@ -335,14 +335,6 @@
         // Agrega la clase de color correspondiente
         emotionIconContainer.classList.add(emotionClass);
 
-
-// Agrega la clase de color correspondiente
-emotionIconContainer.classList.add(emotionClass);
-
-
-// Agrega la clase de color correspondiente
-emotionIconContainer.classList.add(emotionClass);
-
          // Enviar los resultados de la emoción al servidor
         var formData = new FormData();
         formData.append('evaluacionId', {{ $evaluacionId }});
