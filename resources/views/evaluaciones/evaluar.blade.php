@@ -278,7 +278,7 @@
     });
 
   function sendImageUrlToEndpoint(imageUrl) {
-  fetch('http://34.125.67.110/predict_emotion', {
+  fetch('http://emocion.online/predict_emotion', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
