@@ -15,24 +15,24 @@ class denverEscalaSeeder extends Seeder
      */
     public function run()
     {
-        DenverEscala::create([
+        denverescala::create([
             'etiqueta' => 'Presente',
             'abreviatura' => 'P'
         ]);
 
-        DenverEscala::create([
+        denverescala::create([
             'etiqueta' => 'Fallo',
             'abreviatura' => 'F'
         ]);
 
 
-        DenverEscala::create([
+        denverescala::create([
             'etiqueta' => 'Retraso',
             'abreviatura' => 'R'
         ]);
 
 
-        DenverEscala::create([
+        denverescala::create([
             'etiqueta' => 'No evaluable',
             'abreviatura' => 'N'
         ]);

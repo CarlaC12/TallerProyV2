@@ -13,7 +13,7 @@ class Denverescala extends Migration
      */
     public function up()
     {
-        Schema::create('DenverEscala', function (Blueprint $table) {
+        Schema::create('denverescala', function (Blueprint $table) {
             $table->id();
             $table->string('etiqueta');
             $table->string('abreviatura');
@@ -31,6 +31,6 @@ class Denverescala extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('DenverEscala');
+        Schema::dropIfExists('denverescala');
     }
 }

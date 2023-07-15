@@ -123,13 +123,13 @@
                                         @elseif ($emocion == 'angry')
                                             <i class="far fa-angry" style="font-size: 48px; color: #FF4545;"></i>
                                         @elseif ($emocion == 'disgust')
-                                            <i class="far fa-disgust" style="font-size: 48px; color: #800080;"></i>
+                                            <i class="far fa-dizzy" style="font-size: 48px; color: #800080;"></i>
                                         @elseif ($emocion == 'surprise')
                                             <i class="fas fa-exclamation" style="font-size: 48px; color: #FF8C00;"></i>
                                         @elseif ($emocion == 'neutral')
-                                            <i class="far fa-meh-blank" style="font-size: 48px; color: #A0A0A0;"></i>
+                                            <i class="far fa-meh" style="font-size: 48px; color: #A0A0A0;"></i>
                                         @elseif ($emocion == 'fear')
-                                            <i class="far fa-fear" style="font-size: 48px; color: #00B000;"></i>
+                                            <i class="far fa-grimace" style="font-size: 48px; color: #00B000;"></i>
                                         @endif
                                     </div>
                                     <div class="thermometer-progress" style="width: {{ $cantidad }}%; background-color: #00ff00;"></div>
